@@ -138,6 +138,11 @@ class Router
 		return $this->generalizedGet('api/monitoring/check-notifications');
 	}
 
+    public function getSystemInfo()
+    {
+		return $this->generalizedGet('api/device/information');
+    }
+
 
 	/**
 	* Gets the SMS inbox. 
