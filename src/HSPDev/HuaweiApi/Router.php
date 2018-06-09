@@ -349,12 +349,6 @@ class Router
 	}
 
     public function resetDevice() {
-		if (is_int($value) === false) {
-			throw new \Exception('Parameter can only be integer.');
-		}
-		if ($value !== 0 && $value !== 1) {
-			throw new \Exception('Parameter can only be integer.');
-		}
 
 		//Makes sure we are ready for the next request.
 		$this->prepare();
