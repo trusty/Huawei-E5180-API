@@ -348,6 +348,26 @@ class Router
 		return ((string)$obj == 'OK');
 	}
 
+    public function resetDevice() {
+		if (is_int($value) === false) {
+			throw new \Exception('Parameter can only be integer.');
+		}
+		if ($value !== 0 && $value !== 1) {
+			throw new \Exception('Parameter can only be integer.');
+		}
+
+		//Makes sure we are ready for the next request.
+		$this->prepare();
+
+        $dataSwitchXml = '<?xml version: "1.0" encoding="UTF-8"?><request><Control>1</Control></request>';
+
+		$xml = $this->http->postXml($this->getUrl('api/device/control'), $dataSwitchXml);
+		$obj = new \SimpleXMLElement($xml);
+
+		//Simple check if login is OK.
+		return ((string)$obj == 'OK');
+    }
+
 	/**
 	* Internal helper that lets us build the complete URL 
 	* to a given route in the API
