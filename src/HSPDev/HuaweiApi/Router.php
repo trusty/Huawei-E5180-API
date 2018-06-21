@@ -362,6 +362,39 @@ class Router
 		return ((string)$obj == 'OK');
     }
 
+    public function sendUssd($code) {
+
+		//Makes sure we are ready for the next request.
+		$this->prepare();
+
+        $dataSwitchXml = '<?xml version=\"1.0\" encoding=\"UTF-8\"?><request><content>' . $code . '</content><codeType>CodeType</codeType><timeout></timeout></request>';
+
+		$xml = $this->http->postXml($this->getUrl('api/ussd/send'), $dataSwitchXml);
+		$obj = new \SimpleXMLElement($xml);
+
+        var_dump($obj);
+		//Simple check if login is OK.
+		return ((string)$obj == 'OK');
+    }
+
+
+    public function getUssd($code) {
+		$obj = $this->generalizedGet('api/ussd/get');
+		if(property_exists($obj, 'content'))
+		{
+			/*
+			* Logged out seems to be -1
+			* Logged in seems to be 0.
+			* What the hell?
+			*/
+			return $obj->content;
+		}
+		return false;
+
+    }
+
+
+
 	/**
 	* Internal helper that lets us build the complete URL 
 	* to a given route in the API
